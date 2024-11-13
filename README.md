@@ -1,7 +1,7 @@
 
 # Rock Paper Scissors
 
-
+[View Live Demo](https://pretzelvibes.github.io/rps_game/)
 
 A brief description of what this project does and who it's for
 
