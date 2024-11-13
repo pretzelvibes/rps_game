@@ -1,0 +1,28 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+#header {
+    display:flex;
+    justify-content: center;
+    background-color: paleturquoise;
+}
+
+.title {
+    color: indianred;
+}
+
+#content {
+    text-align: center;
+}
+
+#scores-container {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    gap: 40px;
+}
