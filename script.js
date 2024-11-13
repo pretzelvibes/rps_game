@@ -18,8 +18,9 @@ function playRound(humanChoice) {
     const computerChoice = getComputerChoice();
     round++;
 
-    updateSigns(humanChoice, computerChoice)
-    determineWinner(humanChoice, computerChoice);
+    updateSigns(humanChoice, computerChoice);
+    const result = determineWinner(humanChoice, computerChoice);
+    updateScores(result, humanChoice, computerChoice);
 
     if (isGameOver()) {
         btnRock.setAttribute("disabled", "");
@@ -49,18 +50,32 @@ function updateSigns(humanChoice, computerChoice) {
     computerImg.setAttribute("alt", capitalizeFirstChar(computerChoice));
 }
 
+function updateScores(result, humanChoice, computerChoice) {
+    switch (result) {
+        case "win":
+            humanScore++;
+            updateScoreHTML("win", humanChoice, computerChoice);
+            break;
+        case "draw":
+            round--;
+            updateScoreHTML("draw", humanChoice, computerChoice);
+            break;
+        case "lose":
+            cpuScore++;
+            updateScoreHTML("lose", humanChoice, computerChoice);
+            break;
+    }
+}
+
 function determineWinner(humanChoice, computerChoice) {
     if ((humanChoice === "rock" && computerChoice === "scissors") ||
         (humanChoice === "paper" && computerChoice === "rock") ||
         (humanChoice === "scissors" && computerChoice === "paper")) {
-        humanScore++;
-        updateScoreHTML("win", humanChoice, computerChoice);
+        return "win";
     } else if (humanChoice === computerChoice) {
-        round--;
-        updateScoreHTML("draw", humanChoice, computerChoice);
+        return "draw";
     } else {
-        cpuScore++;
-        updateScoreHTML("lose", humanChoice, computerChoice);
+        return "lose";
     }
 }
 
