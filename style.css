@@ -21,12 +21,17 @@ body {
     font-weight: 700;
 }
 
-#score-info, .message {
+#scoreInfo, .message {
     margin: 10px 0;
+}
+
+#scoreInfo {
+    color: #ff9800;
 }
 
 #scores-container {
     display: flex;
+    justify-content: center;
     gap: 40px;
     margin: 20px 0;
 }
@@ -51,7 +56,8 @@ body {
 
 .buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10px;
 }
 
 button {
@@ -66,7 +72,7 @@ button img {
     height: 60px;
 }
 
-#endGame {
+#gameOver {
     background-color: #ffdd57;
     color: #1e1e1e;
     border-radius: 10px;
@@ -83,16 +89,4 @@ button img {
     border-radius: 5px;
     padding: 10px 20px;
     margin-top: 10px;
-}
-
-.win {
-    color: #4caf50;
-}
-
-.lose {
-    color: #f44336;
-}
-
-.draw {
-    color: #ff9800;
 }

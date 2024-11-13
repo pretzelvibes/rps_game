@@ -1,44 +1,26 @@
-function capitalizeFirstChar(string) {
-    const firstChar = string.charAt(0).toUpperCase();
-    string = firstChar + string.substring(1);
-    return string;
-}
-
-function getComputerChoice() {
-    let choice = ["rock", "paper", "scissors"];
-    let randomNumber = Math.floor(Math.random() * choice.length);
-    return choice[randomNumber];
-}
-
 function playRound(humanChoice) {
-    if (isGameOver()) {
-        return;
-    }
+    if (isGameOver()) return;
 
     const computerChoice = getComputerChoice();
     round++;
-
     updateSigns(humanChoice, computerChoice);
     const result = determineWinner(humanChoice, computerChoice);
     updateScores(result, humanChoice, computerChoice);
 
     if (isGameOver()) {
         disableChoiceButtons();
-
-        const h2 = document.createElement("h2");
-        h2.setAttribute("id", "isGameOver");
-        if (humanScore > computerScore) {
-            h2.textContent = "Game over - Congratulations! You won the game!";
-        } else {
-            h2.textContent = "Game over - You lost the game. Better luck next time!";
-        }
-        const btnReset = document.createElement("button");
-        btnReset.textContent = "Start New Game!";
-        btnReset.setAttribute("id", "btnNewGame");
-        content.appendChild(h2);
-        content.appendChild(btnReset);
-        btnReset.addEventListener("click", resetGame);
+        displayEndGameMessage();
     }
+}
+
+function capitalizeFirstChar(move) {
+    return move.charAt(0).toUpperCase() + move.substring(1);
+}
+
+function getComputerChoice() {
+    let choice = ["rock", "paper", "scissors"];
+    let randomNumber = Math.floor(Math.random() * choice.length);
+    return choice[randomNumber];
 }
 
 function disableChoiceButtons() {
@@ -50,10 +32,17 @@ function enableChoiceButtons() {
 }
 
 function updateSigns(humanChoice, computerChoice) {
+    if (humanChoice === undefined && computerChoice === undefined) {
+        humanChoice = "question";
+        computerChoice = "question";
+        playerImg.setAttribute("alt", "Player's choice");
+        computerImg.setAttribute("alt", "Computer's choice");
+    } else {
+        playerImg.setAttribute("alt", capitalizeFirstChar(humanChoice));
+        computerImg.setAttribute("alt", capitalizeFirstChar(computerChoice));
+    }
     playerImg.setAttribute("src", "./img/" + humanChoice + ".png");
-    playerImg.setAttribute("alt", capitalizeFirstChar(humanChoice));
     computerImg.setAttribute("src", "./img/" + computerChoice + ".png");
-    computerImg.setAttribute("alt", capitalizeFirstChar(computerChoice));
 }
 
 function updateScores(result, humanChoice, computerChoice) {
@@ -85,15 +74,25 @@ function determineWinner(humanChoice, computerChoice) {
     }
 }
 
+function displayEndGameMessage() {
+    const h2 = document.createElement("h2");
+    h2.setAttribute("id", "gameOver");
+    h2.textContent = humanScore > computerScore
+        ? "Congratulations! You won the game!"
+        : "You lost the game. Better luck next time!";
+    const btnReset = document.createElement("button");
+    btnReset.textContent = "Start New Game!";
+    btnReset.setAttribute("id", "btnNewGame");
+    content.appendChild(h2);
+    content.appendChild(btnReset);
+    btnReset.addEventListener("click", resetGame);
+}
+
 function resetGame() {
-    document.querySelector("#isGameOver").remove();
+    document.querySelector("#gameOver").remove();
     document.querySelector("#btnNewGame").remove();
     enableChoiceButtons();
-    playerImg.setAttribute("src", "./img/question.png");
-    playerImg.setAttribute("alt", "Player's choice");
-    computerImg.setAttribute("src", "./img/question.png");
-    computerImg.setAttribute("alt", "Player's choice");
-
+    updateSigns();
     humanScore = 0;
     cpuScore = 0;
     round = 0;
@@ -104,22 +103,26 @@ function isGameOver() {
     return cpuScore === maxGame || humanScore === maxGame;
 }
 
-function updateScoreHTML(result, humanChoice = "", computerChoice = "") {
+function updateScoreHTML(result, humanChoice, computerChoice) {
     switch (result) {
         case "start":
             scoreInfo.textContent = "Choose your move!";
+            scoreInfo.style.color = "#ff9800";
             scoreMessage.textContent = "First to score 5 points win the game";
             break;
         case "win":
             scoreInfo.textContent = "Round #" + round + ": You win!";
+            scoreInfo.style.color = "#4caf50";
             scoreMessage.textContent = capitalizeFirstChar(humanChoice) + " beats " + capitalizeFirstChar(computerChoice) + ".";
             break;
         case "draw":
             scoreInfo.textContent = "Round #" + round + ": It's a tie!";
+            scoreInfo.style.color = "#ff9800";
             scoreMessage.textContent = "Both chose " + capitalizeFirstChar(humanChoice) + ".";
             break;
         case "lose":
             scoreInfo.textContent = "Round #" + round + ": You lose!";
+            scoreInfo.style.color = "#f44336";
             scoreMessage.textContent = capitalizeFirstChar(computerChoice) + " beats " + capitalizeFirstChar(humanChoice) + ".";
             break;
     }
@@ -127,6 +130,15 @@ function updateScoreHTML(result, humanChoice = "", computerChoice = "") {
     computerScore.textContent = "Computer: " + cpuScore;
 }
 
+const content = document.querySelector("#content");
+const scoreInfo = document.querySelector("#scoreInfo");
+const scoreMessage = document.querySelector("#scoreMessage");
+const playerSign = document.querySelector("#playerSign");
+const playerImg = document.querySelector("#playerImg");
+const playerScore = document.querySelector("#playerScore");
+const computerSign = document.querySelector("#computerSign");
+const computerImg = document.querySelector("#computerImg");
+const computerScore = document.querySelector("#computerScore");
 const btnRock = document.querySelector("#rock");
 const btnPaper = document.querySelector("#paper");
 const btnScissors = document.querySelector("#scissors");
@@ -139,13 +151,3 @@ let humanScore = 0;
 let cpuScore = 0;
 let round = 0;
 const maxGame = 5;
-
-const content = document.querySelector("#content");
-const playerScore = document.querySelector("#playerScore");
-const computerScore = document.querySelector("#computerScore");
-const scoreInfo = document.querySelector("#score-info");
-const scoreMessage = document.querySelector("#score-message");
-const playerSign = document.querySelector("#playerSign");
-const computerSign = document.querySelector("#computerSign");
-const playerImg = document.querySelector("#playerImg");
-const computerImg = document.querySelector("#computerImg");
