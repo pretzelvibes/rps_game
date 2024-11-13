@@ -18,11 +18,7 @@ function playRound(humanChoice) {
     const computerChoice = getComputerChoice();
     round++;
 
-    playerImg.setAttribute("src", "./img/" + humanChoice + ".png");
-    playerImg.setAttribute("alt", capitalizeFirstChar(humanChoice));
-    computerImg.setAttribute("src", "./img/" + computerChoice + ".png");
-    computerImg.setAttribute("alt", capitalizeFirstChar(computerChoice));
-
+    updateSigns(humanChoice, computerChoice)
     determineWinner(humanChoice, computerChoice);
 
     if (isGameOver()) {
@@ -44,6 +40,13 @@ function playRound(humanChoice) {
         content.appendChild(btnReset);
         btnReset.addEventListener("click", resetGame);
     }
+}
+
+function updateSigns(humanChoice, computerChoice) {
+    playerImg.setAttribute("src", "./img/" + humanChoice + ".png");
+    playerImg.setAttribute("alt", capitalizeFirstChar(humanChoice));
+    computerImg.setAttribute("src", "./img/" + computerChoice + ".png");
+    computerImg.setAttribute("alt", capitalizeFirstChar(computerChoice));
 }
 
 function determineWinner(humanChoice, computerChoice) {
