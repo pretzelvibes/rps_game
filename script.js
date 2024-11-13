@@ -23,9 +23,7 @@ function playRound(humanChoice) {
     updateScores(result, humanChoice, computerChoice);
 
     if (isGameOver()) {
-        btnRock.setAttribute("disabled", "");
-        btnPaper.setAttribute("disabled", "");
-        btnScissors.setAttribute("disabled", "");
+        disableChoiceButtons();
 
         const h2 = document.createElement("h2");
         h2.setAttribute("id", "isGameOver");
@@ -41,6 +39,14 @@ function playRound(humanChoice) {
         content.appendChild(btnReset);
         btnReset.addEventListener("click", resetGame);
     }
+}
+
+function disableChoiceButtons() {
+    [btnRock, btnPaper, btnScissors].forEach(button => button.setAttribute("disabled", ""));
+}
+
+function enableChoiceButtons() {
+    [btnRock, btnPaper, btnScissors].forEach(button => button.removeAttribute("disabled", ""));
 }
 
 function updateSigns(humanChoice, computerChoice) {
@@ -82,9 +88,7 @@ function determineWinner(humanChoice, computerChoice) {
 function resetGame() {
     document.querySelector("#isGameOver").remove();
     document.querySelector("#btnNewGame").remove();
-    btnRock.removeAttribute("disabled", "");
-    btnPaper.removeAttribute("disabled", "");
-    btnScissors.removeAttribute("disabled", "");
+    enableChoiceButtons();
     playerImg.setAttribute("src", "./img/question.png");
     playerImg.setAttribute("alt", "Player's choice");
     computerImg.setAttribute("src", "./img/question.png");
