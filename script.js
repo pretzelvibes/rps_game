@@ -77,7 +77,7 @@ function determineWinner(humanChoice, computerChoice) {
 function displayEndGameMessage() {
     const h2 = document.createElement("h2");
     h2.setAttribute("id", "gameOver");
-    h2.textContent = humanScore > computerScore
+    h2.textContent = humanScore > cpuScore 
         ? "Congratulations! You won the game!"
         : "You lost the game. Better luck next time!";
     const btnReset = document.createElement("button");
