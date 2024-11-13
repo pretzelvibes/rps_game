@@ -8,26 +8,25 @@
     <title>Rock Paper Scissors</title>
 </head>
 <body>
-    <div id="header">
-        <h1 class=title>Rock Paper Scissors</h1>
-    </div>
+    <h1 class=title>Rock Paper Scissors</h1>
     <div id="content">
-        <h2 id="score-info">Choose your move!</h2>
-        <h3 id="score-message">First to score 5 points win the game</h3>
+        <h2 id="score-info" class="draw">Choose your move!</h2>
+        <h3 id="score-message" class="message">First to score 5 points win the game</h3>
         <div id="scores-container">
             <div class="score-box">
-                <div class="sign" id="playerSign">?</div>
+                <div class="sign" id="playerSign"><img id="playerImg" src="./img/question.png" alt="Player's choice"></div>
                 <p class="score" id="playerScore">Player: 0</p>
             </div>
             <div class="score-box">
-                <div class="sign" id="computerSign">?</div>
+                <div class="sign" id="computerSign"><img id="computerImg" src="./img/question.png" alt="Computer's choice"></div>
                 <p class="score" id="computerScore">Computer: 0</p>
             </div>
         </div>
+        <h3 class="message">Select your move:</h3>
         <div class="buttons">
-            <button id="rock"><img src="img/rock.png"></button>
-            <button id="paper"><img src="img/paper.png"></button>
-            <button id="scissors"><img src="img/scissors.png"></button>
+            <button id="rock"><img src="./img/rock.png" alt="Rock"></button>
+            <button id="paper"><img src="./img/paper.png" alt="Paper"></button>
+            <button id="scissors"><img src="./img/scissors.png" alt="Scissors"></button>
         </div>
     </div>
 </body>

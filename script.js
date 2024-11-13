@@ -17,25 +17,31 @@ function playRound(humanChoice) {
 
     const computerChoice = getComputerChoice();
     round++;
-    playerSign.textContent = capitalizeFirstChar(humanChoice);
-    computerSign.textContent = capitalizeFirstChar(computerChoice);
+
+    playerImg.setAttribute("src", "./img/" + humanChoice + ".png");
+    playerImg.setAttribute("alt", capitalizeFirstChar(humanChoice));
+    computerImg.setAttribute("src", "./img/" + computerChoice + ".png");
+    computerImg.setAttribute("alt", capitalizeFirstChar(computerChoice));
+
     determineWinner(humanChoice, computerChoice);
 
     if (isGameOver()) {
         btnRock.setAttribute("disabled", "");
         btnPaper.setAttribute("disabled", "");
         btnScissors.setAttribute("disabled", "");
-        const div = document.createElement("div");
-        div.setAttribute("id", "isGameOver");
+
+        const h2 = document.createElement("h2");
+        h2.setAttribute("id", "isGameOver");
         if (humanScore > computerScore) {
-            div.textContent = "Game over - Congratulations! You won the game!";
+            h2.textContent = "Game over - Congratulations! You won the game!";
         } else {
-            div.textContent = "Game over - You lost the game. Better luck next time!";
+            h2.textContent = "Game over - You lost the game. Better luck next time!";
         }
         const btnReset = document.createElement("button");
-        btnReset.textContent = "Reset";
-        content.appendChild(div);
-        div.appendChild(btnReset);
+        btnReset.textContent = "Start New Game!";
+        btnReset.setAttribute("id", "btnNewGame");
+        content.appendChild(h2);
+        content.appendChild(btnReset);
         btnReset.addEventListener("click", resetGame);
     }
 }
@@ -56,11 +62,16 @@ function determineWinner(humanChoice, computerChoice) {
 }
 
 function resetGame() {
-    const div = document.querySelector("#isGameOver");
-    content.removeChild(div);
+    document.querySelector("#isGameOver").remove();
+    document.querySelector("#btnNewGame").remove();
     btnRock.removeAttribute("disabled", "");
     btnPaper.removeAttribute("disabled", "");
     btnScissors.removeAttribute("disabled", "");
+    playerImg.setAttribute("src", "./img/question.png");
+    playerImg.setAttribute("alt", "Player's choice");
+    computerImg.setAttribute("src", "./img/question.png");
+    computerImg.setAttribute("alt", "Player's choice");
+
     humanScore = 0;
     cpuScore = 0;
     round = 0;
@@ -114,3 +125,5 @@ const scoreInfo = document.querySelector("#score-info");
 const scoreMessage = document.querySelector("#score-message");
 const playerSign = document.querySelector("#playerSign");
 const computerSign = document.querySelector("#computerSign");
+const playerImg = document.querySelector("#playerImg");
+const computerImg = document.querySelector("#computerImg");
